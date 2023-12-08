@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 10px;
+            text-align: right;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>User Information</h1>
+    </header>
+
+    <form action="{% url "purchase" %}" method="post">
+        {% csrf_token %}
+        <label for="firstName">{{ form.first_name.label_tag }}</label>
+        {{ form.first_name }}
+
+        <label for="lastName">{{ form.last_name.label_tag }}</label>
+        {{ form.last_name }}
+        
+        <label for="address">{{ form.address.label_tag }}</label>
+        {{ form.address }}
+        
+        <label for="phoneNumber">{{ form.phone.label_tag }}</label>
+        {{ form.phone }}
+        
+        <button type="submit">Proceed to Payment</button>
+    </form>
+
+    <footer>
+        <p>&copy; 2023 User Information. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function proceedToPayment() {
+            // Redirect to the payment gateway or perform further actions
+            alert("Redirecting to the payment gateway. Your information has been submitted.");
+        }
+    </script>
+</body>
+
+</html>

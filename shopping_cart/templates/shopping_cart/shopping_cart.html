@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 10px;
+            text-align: right;
+        }
+
+        header a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .cart-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #dee2e6;
+            padding: 10px 0;
+        }
+
+        .cart-item img {
+            max-width: 50px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item h3 {
+            margin: 0;
+        }
+
+        .cart-item p {
+            margin: 5px 0;
+            color: #6c757d;
+        }
+
+        .total-price {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .checkout-button {
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .remove-button {
+            background-color: #dc3545;
+            color: #ffffff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        {% comment %} <a href="#" class="cart-icon"><i class="fas fa-shopping-cart"></i></a> {% endcomment %}
+        <h1>Shopping Cart</h1>
+    </header>
+
+    <div class="cart-container">
+        {% for product in shopping_cart %}
+        <div class="cart-item">
+            <img src="{{ product.image.url }}" alt="Product Image">
+            <div class="cart-item-details">
+                <h3>{{ product.title }}</h3>
+                <p>{{ product.description }}</p>
+                <p>${{ product.price }}</p>
+                <form action="{% url "shopping-cart" %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ product.id }}" name="remove-product">
+                    <button class="remove-button" type="submit">Remove</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if shopping_cart %}
+        <div class="total-price">
+            <p>Total: ${{ total_price }}</p>
+        </div>
+
+        <a href="{% url "purchase" %}">
+            <button class="checkout-button" href="">Complete purchase</button>
+        </a>
+        {% else %}
+        <p>You dont have any order in your shopping cart</p>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Shopping Cart. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

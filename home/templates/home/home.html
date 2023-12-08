@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alcoholic Beverages Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 10px;
+            text-align: right;
+            position: relative;
+        }
+
+        header a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+        }
+
+        .product-container {
+            max-width: 800px;
+            margin: 20px auto;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+
+        .product {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .product img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="{% url "shopping-cart" %}" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
+        <h1>Alcoholic Beverages Shop</h1>
+    </header>
+
+    <div class="product-container">
+        {% for product in product %}
+        <div class="product">
+            <img src="{{ product.image.url }}" alt="Product Image">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.description }}</p>
+            <p>${{ product.price }}</p>
+            <form action="{% url "home-page" %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Alcoholic Beverages Shop. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
